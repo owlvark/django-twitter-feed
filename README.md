@@ -5,10 +5,14 @@ Really simple app to show a Twitter feed in your Django application.
 
 It's using a a task to update the feed regularly.
 
+Liam Notes:
+-----------
+This package has been updated to work with Django 1.8 on servers that have time zones active.
+
 
 INSTALL:
 --------
-`pip install django-twitter-feed`
+`pip install git+https://github.com/liamdebeasi/django-twitter-feed.git`
 
 
 Set-up:

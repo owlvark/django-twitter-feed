@@ -1,6 +1,7 @@
 import tweepy
 from django.conf import settings
 from django.db import transaction
+from django.utils import timezone
 
 from twitter_feed.models import Tweet
 
@@ -14,8 +15,9 @@ class ImportTweets:
         self.o_auth_secret = settings.TWITTER_FEED_OPEN_AUTH_SECRET
 
     def update_tweets(self):
-        raw_tweets = self._get_latest_tweets_from_api()
+        raw_tweets = self._get_latest_tweets_from_api()       
         tweets = [self._tweepy_status_to_tweet(status=status) for status in raw_tweets]
+        
         self._replace_all_tweets(tweets)
 
     def _get_latest_tweets_from_api(self):
@@ -33,20 +35,22 @@ class ImportTweets:
         Fields documentation: https://dev.twitter.com/docs/api/1.1/get/statuses/home_timeline
         """
         tweet = Tweet()
-        tweet.published_at = status.created_at
+        
+        # Make published at timezone aware
+        tweet.published_at = timezone.make_aware(status.created_at,  timezone.get_current_timezone())
         tweet.content = status.text
 
         return tweet
 
-    @transaction.commit_manually
+    @transaction.atomic
     def _replace_all_tweets(self, new_tweets):
         try:
-            with transaction.commit_manually():
+            with transaction.atomic():
                 Tweet.objects.remove_all()
 
                 for tweet in new_tweets:
                     tweet.save()
 
-                transaction.commit()
-        except Exception:
+        except Exception as e:
+            print e
             pass
