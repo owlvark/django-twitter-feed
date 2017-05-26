@@ -9,6 +9,8 @@ Liam Notes:
 -----------
 This package has been updated to work with Django 1.8 on servers that have time zones active.
 
+If Django does not detect any migrations for the "twitter_feed" app, it is possible that you will need to copy the models in twitter_feed/modals.py into your app's models.py file.
+
 
 INSTALL:
 --------
