@@ -10,4 +10,4 @@ class Command(BaseCommand):
         for tweet in Tweet.objects.all():
             print "*************************"
             print tweet.published_at
-            print tweet.content
+            print tweet.content.encode('ascii', 'replace')
