@@ -25,7 +25,7 @@ class ImportTweets:
             tweets.append(self._tweepy_status_to_tweet(status=status))
         raw_tweets = self._get_latest_tweets_from_api(use_second_account=True)
         for status in raw_tweets:
-            tweets.append(self._tweepy_status_to_tweet(status=status))
+            tweets.append(self._tweepy_status_to_tweet(status=status, use_second_account=True))
         print "Imported {} tweets".format(len(tweets))
         self._replace_all_tweets(tweets)
 
@@ -41,7 +41,7 @@ class ImportTweets:
         api = tweepy.API(auth)
         return api.user_timeline()
 
-    def _tweepy_status_to_tweet(self, status):
+    def _tweepy_status_to_tweet(self, status, use_second_account=False):
         """
         Fields documentation: https://dev.twitter.com/docs/api/1.1/get/statuses/home_timeline
         """
@@ -50,7 +50,9 @@ class ImportTweets:
         # Make published at timezone aware
         tweet.published_at = timezone.make_aware(status.created_at,  timezone.get_current_timezone())
         tweet.content = status.text
-
+        tweet.api_key = self.consumer_key_1
+        if use_second_account:
+            tweet.api_key = self.consumer_key_2
         return tweet
 
     @transaction.atomic
