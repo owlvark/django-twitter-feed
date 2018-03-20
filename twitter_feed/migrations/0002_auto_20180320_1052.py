@@ -14,6 +14,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='tweet',
             name='api_key',
-            field=models.TextField(default=None, max_length=32, verbose_name='API Key'),
+            field=models.TextField(default='', max_length=32, verbose_name='API Key', blank=True),
         ),
     ]
