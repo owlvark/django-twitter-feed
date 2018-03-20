@@ -9,10 +9,10 @@ from twitter_feed.models import Tweet
 class ImportTweets:
 
     def __init__(self):
-        self.consumer_key = settings.TWITTER_FEED_CONSUMER_PUBLIC_KEY
-        self.consumer_secret = settings.TWITTER_FEED_CONSUMER_SECRET
-        self.o_auth_token = settings.TWITTER_FEED_OPEN_AUTH_TOKEN
-        self.o_auth_secret = settings.TWITTER_FEED_OPEN_AUTH_SECRET
+        self.consumer_key = settings.TWITTER_FEED_CONSUMER_PUBLIC_KEY_2
+        self.consumer_secret = settings.TWITTER_FEED_CONSUMER_SECRET_2
+        self.o_auth_token = settings.TWITTER_FEED_OPEN_AUTH_TOKEN_2
+        self.o_auth_secret = settings.TWITTER_FEED_OPEN_AUTH_SECRET_2
 
     def update_tweets(self):
         raw_tweets = self._get_latest_tweets_from_api()       
