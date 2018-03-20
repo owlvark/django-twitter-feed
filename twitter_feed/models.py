@@ -3,8 +3,8 @@ from django.db import models
 
 class TweetManager(models.Manager):
 
-    def get_latest_tweets(self, offset=0, limit=10):
-        return self.all().order_by('-published_at')[offset:limit]
+    def get_latest_tweets(self, api_key, offset=0, limit=10):
+        return self.filter(api_key=api_key).order_by('-published_at')[offset:limit]
 
     def remove_all(self):
         self.all().delete()
