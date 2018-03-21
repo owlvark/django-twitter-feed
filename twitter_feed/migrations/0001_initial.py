@@ -1,38 +1,28 @@
 # -*- coding: utf-8 -*-
-from south.utils import datetime_utils as datetime
-from south.db import db
-from south.v2 import SchemaMigration
-from django.db import models
+from __future__ import unicode_literals
+
+from django.db import models, migrations
 
 
-class Migration(SchemaMigration):
+class Migration(migrations.Migration):
 
-    def forwards(self, orm):
-        # Adding model 'Tweet'
-        db.create_table(u'twitter_feed_tweet', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('api_key', self.gf('django.db.models.fields.TextField')(max_length=32)),
-            ('content', self.gf('django.db.models.fields.TextField')(max_length=20000)),
-            ('published_at', self.gf('django.db.models.fields.DateTimeField')()),
-            ('updated_at', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
-            ('created_at', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-        ))
-        db.send_create_signal(u'twitter_feed', ['Tweet'])
+    dependencies = [
+    ]
 
-    def backwards(self, orm):
-        # Deleting model 'Tweet'
-        db.delete_table(u'twitter_feed_tweet')
-
-    models = {
-        u'twitter_feed.tweet': {
-            'Meta': {'object_name': 'Tweet'},
-            'api_key': ('django.db.models.fields.TextField', [], {'max_length': '32'}),
-            'content': ('django.db.models.fields.TextField', [], {'max_length': '20000'}),
-            'created_at': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'published_at': ('django.db.models.fields.DateTimeField', [], {}),
-            'updated_at': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'})
-        }
-    }
-
-    complete_apps = ['twitter_feed']
+    operations = [
+        migrations.CreateModel(
+            name='Tweet',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('api_key', models.TextField(max_length=32, verbose_name='Tweet key')),
+                ('content', models.TextField(max_length=20000, verbose_name='Tweet Content')),
+                ('published_at', models.DateTimeField(verbose_name='Published At')),
+                ('updated_at', models.DateTimeField(auto_now=True, verbose_name='Last Update')),
+                ('created_at', models.DateTimeField(auto_now_add=True, verbose_name='Date')),
+            ],
+            options={
+                'verbose_name': 'Tweet',
+                'verbose_name_plural': 'Tweets',
+            },
+        ),
+    ]
